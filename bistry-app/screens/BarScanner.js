@@ -16,7 +16,11 @@ function BarScanner({ navigation }) {
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+        alert(
+            `Bar code with type ${type} and data ${data} has been scanned!\nMoving to the restaurant!`
+        );
+        navigation.navigate("MainScreen");
+
     };
 
     if (hasPermission === null) {
