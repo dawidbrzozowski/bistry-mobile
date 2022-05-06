@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import OutlinedButton from "../components/UI/OutlinedButton";
 
 
 
@@ -11,7 +12,9 @@ export default function HomeScreen() {
     return (
         <View style={styles.container}>
             <Text>Bistry | Witaj w restauracji</Text>
-            <Button title='Zeskanuj kod QR!' onPress={() => navigation.navigate("QRCodeScanner")}/>
+            <OutlinedButton icon='camera' onPress={() => navigation.navigate("QRCodeScanner")}>
+                Zeskanuj kod QR!
+            </OutlinedButton>
         </View>
     );
 }
