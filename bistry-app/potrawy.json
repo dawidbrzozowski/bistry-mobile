@@ -1,0 +1,128 @@
+[
+  {
+    "name": "Marinara",
+    "category": "Pizza czerwona",
+    "price": 26,
+    "description": "czosnek, oregano, bazylia, oliwa"
+  },
+  {
+    "name": "Margherita",
+    "category": "Pizza czerwona",
+    "price": 30,
+    "description": "mozzarella fior di latte, parmezan, bazylia, oliwa"
+  },
+  {
+    "name": "Vegana",
+    "category": "Pizza czerwona",
+    "price": 32,
+    "description": "pieczona papryka, karczochy, kapary, oliwki, czosnek, bazylia, oliwa"
+  },
+  {
+    "name": "Napoletana",
+    "category": "Pizza czerwona",
+    "price": 32,
+    "description": "anchovies, oliwki, kapary, czosnek, oregano, oliwa"
+  },
+  {
+    "name": "Affumicata",
+    "category": "Pizza czerwona",
+    "price": 32,
+    "description": "wędzona provola, pieprz, bazylia, oliwa"
+  },
+  {
+    "name": "Carminuccio",
+    "category": "Pizza czerwona",
+    "price": 33,
+    "description": "pancetta, pecorino, bazylia, pieprz"
+  },
+  {
+    "name": "Bufalina",
+    "category": "Pizza czerwona",
+    "price": 36,
+    "description": "mozzarella di bufala, bazylia, oliwa"
+  },
+  {
+    "name": "Cotto",
+    "category": "Pizza czerwona",
+    "price": 37,
+    "description": "mozzarella fior di latte, prosciutto cotto, parmezan, bazylia, oliwa"
+  },
+  {
+    "name": "Diavola",
+    "category": "Pizza czerwona",
+    "price": 37,
+    "description": "mozzarella fior di latte, salami picante, chilli, bazylia"
+  },
+  {
+    "name": "Quattro formaggi",
+    "category": "Pizza czerwona",
+    "price": 37,
+    "description": "mozzarella fior di latte, gorgonzola, pecorino, parmezan"
+  },
+  {
+    "name": "Nduja",
+    "category": "Pizza czerwona",
+    "price": 39,
+    "description": "wędzona provola, mozzarella di bufala, 'nduja, bazylia"
+  },
+  {
+    "name": "Prosciutto di Parma",
+    "category": "Pizza czerwona",
+    "price": 42,
+    "description": "mozzarella fior di latte, prosciutto di parma, rukola, parmezan, oliwa"
+  },
+  {
+    "name": "Funghi",
+    "category": "Pizza biała",
+    "price": 36,
+    "description": "mozzarella fior di latte, boczniaki, czosnek, tymianek, świeży pieprz"
+  },
+  {
+    "name": "Spinaci",
+    "category": "Pizza biała",
+    "price": 37,
+    "description": "mozzarella fior di latte, szpinak, guanciale, czosnek, pecorino"
+  },
+  {
+    "name": "Mortadella",
+    "category": "Pizza biała",
+    "price": 39,
+    "description": "mozzarella fior di latte, mortadela, pesto pistacjowe, pomidorki cherry, bazylia"
+  },
+  {
+    "name": "Tartufo",
+    "category": "Pizza biała",
+    "price": 42,
+    "description": "mozzarella fior di latte, salsa z trufli, prosciutto cotto, pecorino truflowe, oliwa"
+  },
+  {
+    "name": "Foccacia",
+    "category": "Przystawka",
+    "price": 12,
+    "description": "rozmaryn, czosnek, oliwa"
+  },
+  {
+    "name": "Oliwki",
+    "category": "Przystawka",
+    "price": 13,
+    "description": "Nocellara, Passoloni, Taggiasche"
+  },
+  {
+    "name": "Insalata mista",
+    "category": "Przystawka",
+    "price": 17,
+    "description": ""
+  },
+  {
+    "name": "Burrata",
+    "category": "Przystawka",
+    "price": 36,
+    "description": "burrata, pomidorki cherry, liście sałaty, pesto pistacjowe, oliwa"
+  },
+  {
+    "name": "Brownie",
+    "category": "Deser",
+    "price": 15,
+    "description": "Brownie czekoladowe z malinami"
+  }
+]
