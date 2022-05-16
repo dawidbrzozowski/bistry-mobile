@@ -15,9 +15,10 @@ const Stack = createNativeStackNavigator();
   return (
           <NavigationContainer>
               <Stack.Navigator initialRouteName="Home">
-                  <Stack.Screen name="Home" component={HomeScreen} />
-                  <Stack.Screen name="QRCodeScanner" component={BarScanner}/>
-                  <Stack.Screen name="MainScreen" component={MainScreen}/>
+                  <Stack.Screen
+                      name="Home" options={{title:"Ekran powitalny"}} component={HomeScreen} />
+                  <Stack.Screen name="QRCodeScanner" options={{title:"Zeskanuj stolik"}} component={BarScanner}/>
+                  <Stack.Screen name="MainScreen" options={{title:"Widok główny"}} component={MainScreen}/>
               </Stack.Navigator>
           </NavigationContainer>
 
