@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import MenuItem from "../components/MenuItem";
 
 
-export default function MainScreen() {
+export default function MainScreen({route, navigation}) {
+    const tableNumber = route.params.tableNumber;
+    navigation.setOptions({title: "Stolik numer " + tableNumber})
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const apiUrl = "https://bistry-api.azurewebsites.net/menuitems";
-    const navigation = useNavigation();
 
 
     const getMenu = async () => {

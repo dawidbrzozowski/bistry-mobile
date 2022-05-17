@@ -16,10 +16,18 @@ function BarScanner({ navigation }) {
 
     const handleBarCodeScanned = ({ type, data }) => {
         setScanned(true);
-        alert(
-            `Bar code with type ${type} and data ${data} has been scanned!\nMoving to the restaurant!`
-        );
-        navigation.navigate("MainScreen");
+        const tableNumber = parseInt(data);
+        if (!isNaN(tableNumber)){
+            alert(
+                `QR Code code has been scanned!\nMoving to the table ${data}!`
+            );
+            navigation.navigate("MainScreen", {"tableNumber": tableNumber});
+        }
+        else {
+            alert(
+                `Please scan a valid QR Code!`
+            );
+        }
 
     };
 
