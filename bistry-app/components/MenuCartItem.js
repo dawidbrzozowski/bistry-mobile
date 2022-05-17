@@ -10,12 +10,10 @@ import {
 import {useNavigation} from '@react-navigation/native';
 
 
-function MenuItem({
+function MenuCartItem({
                       id,
                       name,
-                      category,
-                      price,
-                      description,
+                      price
                   }) {
     const navigation = useNavigation();
 
@@ -36,23 +34,20 @@ function MenuItem({
                 <View style={styles.innerContainer}>
                     <View>
                         <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.description}>{description}</Text>
                         <Text style={styles.price}>{price}</Text>
                     </View>
                 </View>
             </Pressable>
-            <Button title="Dodaj do zamówienia" onPress={() => alert("Dodano do zamówienia!")}/>
-
         </View>
     );
 }
 
-export default MenuItem;
+export default MenuCartItem;
 
 const styles = StyleSheet.create({
     menuItem: {
-        margin: 16,
-        borderRadius: 8,
+        margin: 3,
+        borderRadius: 4,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
         backgroundColor: 'white',
         elevation: 4,
@@ -71,18 +66,13 @@ const styles = StyleSheet.create({
     name: {
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: 18,
-        margin: 8,
-    },
-    description: {
-        fontSize: 14,
+        fontSize: 16,
         margin: 2,
-        textAlign: 'center'
     },
     price: {
         fontWeight: 'bold',
         textAlign: 'center',
-        fontSize: 16,
+        fontSize: 12,
         margin: 2,
     },
 });

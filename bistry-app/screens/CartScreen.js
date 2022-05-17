@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button} from 'react-native';
 import MenuItem from "../components/MenuItem";
+import MenuCartItem from "../components/MenuCartItem";
 
 
-export default function MainScreen({route, navigation}) {
+export default function CartScreen({route, navigation}) {
     const tableNumber = route.params.tableNumber;
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const apiUrl = "https://bistry-api.azurewebsites.net/menuitems";
+    const apiUrl = "https://bistry-api.azurewebsites.net/menuitems"; // tu podmiana na api z zamówieniem dla danego stolika
 
 
-    const getMenu = async () => {
+    const getCart = async () => {
         try {
             const response = await fetch(apiUrl);
             const json = await response.json();
@@ -23,15 +24,8 @@ export default function MainScreen({route, navigation}) {
     }
 
     useEffect(() => {
-        navigation.setOptions({headerTitle: "Stolik numer " + tableNumber})
-        navigation.setOptions({headerRight: () => (
-                <Button
-                    onPress={() => navigation.navigate("CartScreen", {"tableNumber": tableNumber})}
-                    title="Cart"
-                    color="#00cc00"
-                />
-            )});
-        getMenu();
+        navigation.setOptions({headerTitle: "Koszyk dla stolika numer " + tableNumber});
+        getCart();
     }, []);
 
     function renderMenuItem(itemData){
@@ -40,11 +34,9 @@ export default function MainScreen({route, navigation}) {
         const menuItemProps= {
             id: menuItem.id,
             name: menuItem.name,
-            category: menuItem.category,
             price: menuItem.price,
-            description: menuItem.description
         }
-        return <MenuItem {...menuItemProps}/>;
+        return <MenuCartItem {...menuItemProps}/>;
 
     }
 
@@ -58,10 +50,7 @@ export default function MainScreen({route, navigation}) {
                     renderItem={renderMenuItem}
                 />
             )}
-            <Button title="Wezwij kelnera" onPress={() => alert("Wezwano kelnera! Proszę czekać")}>
-            </Button>
-            <Button title="Opłać zamówienie" onPress={() => alert("Opłacono zamówienie")}>
-            </Button>
+            <Button title={"Dokonaj płatności: "+ data.reduce((a, b) => a + (b["price"] || 0), 0)} onPress={() => alert("Dokonano płatność!")}/>
         </View>
     );
 }
