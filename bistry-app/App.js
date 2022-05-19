@@ -29,21 +29,23 @@ export default function App() {
                     name="QRCodeScanner"
                     options={{
                         title: "Zeskanuj stolik",
+                        headerBackTitle: "Cofnij",
+                        headerStyle: {
+                            backgroundColor: '#fcfcfc'
+                        }
                     }}
                     component={BarScanner}
                 />
                 <Stack.Screen name="MainScreen" component={MainScreen}
-                              // options={({navigation, route})=>({
-                              //     headerRight: () => (
-                              //         <Button
-                              //             onPress={() => navigation.navigate("CartScreen")}
-                              //             title="Cart"
-                              //             color="#00cc00"
-                              //         />
-                              //     ),
-                              // })}
+                              options={{
+                                  headerBackTitle: "Cofnij",
+                                  headerStyle: {
+                                      backgroundColor: '#fcfcfc'
+                                  }}}
                 />
-                <Stack.Screen name="CartScreen" options={{title: "Koszyk"}} component={CartScreen}/>
+                <Stack.Screen name="CartScreen"
+                              options={{title: "Koszyk", headerBackTitle: "Cofnij"}}
+                              component={CartScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
 

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button} from 'react-native';
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button, TouchableOpacity} from 'react-native';
 import MenuItem from "../components/MenuItem";
 
 
@@ -19,20 +19,22 @@ export default function MainScreen({route, navigation}) {
             console.error(error);
         } finally {
             setLoading(false);
+
         }
     }
 
     useEffect(() => {
-        navigation.setOptions({headerTitle: "Stolik numer " + tableNumber})
+        navigation.setOptions({headerTitle: "Stolik #" + tableNumber})
         navigation.setOptions({headerRight: () => (
                 <Button
                     onPress={() => navigation.navigate("CartScreen", {"tableNumber": tableNumber})}
-                    title="Cart"
+                    title={"Koszyk"}
                     color="#00cc00"
                 />
             )});
         getMenu();
     }, []);
+
 
     function renderMenuItem(itemData){
         const menuItem = itemData.item;
@@ -58,10 +60,19 @@ export default function MainScreen({route, navigation}) {
                     renderItem={renderMenuItem}
                 />
             )}
-            <Button title="Wezwij kelnera" onPress={() => alert("Wezwano kelnera! Proszę czekać")}>
-            </Button>
-            <Button title="Opłać zamówienie" onPress={() => alert("Opłacono zamówienie")}>
-            </Button>
+            <View style={styles.specialActionView}>
+                <TouchableOpacity
+                    style={{...styles.specialActionButton, borderBottomLeftRadius: 15, backgroundColor: "yellow"}}
+                    onPress={() => alert("Wezwano kelnera! Proszę czekać")}>
+                    <Text >Wezwij kelnera</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={{...styles.specialActionButton, borderBottomRightRadius: 15, backgroundColor: "green"}}
+                    onPress={() => alert("Opłacono zamówienie")}>
+                    <Text >Opłać zamówienie</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -69,9 +80,23 @@ export default function MainScreen({route, navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#fcfcfc',
         alignItems: 'center',
         justifyContent: 'center',
-
+    },
+    specialActionView: {
+        flexDirection: 'row',
+    },
+    specialActionButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        opacity: 0.6,
+        width: '44%',
+        marginTop: 10,
+        height: 40,
+        marginBottom: 20,
+        marginRight: 2,
+        marginLeft: 2
     },
 });

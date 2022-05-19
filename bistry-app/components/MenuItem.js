@@ -5,9 +5,10 @@ import {
     Image,
     Button,
     StyleSheet,
-    Platform,
+    Platform, TouchableOpacity,
 } from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import React from "react";
 
 
 function MenuItem({
@@ -19,20 +20,8 @@ function MenuItem({
                   }) {
     const navigation = useNavigation();
 
-    function selectMenuItemHandler() {
-        // navigation.navigate('MealDetail', {
-        //     mealId: id,
-        // });
-        console.log("MealItemHandler")
-    }
-
     return (
         <View style={styles.menuItem}>
-            <Pressable
-                android_ripple={{color: '#ccc'}}
-                style={({pressed}) => (pressed ? styles.buttonPressed : null)}
-                onPress={selectMenuItemHandler}
-            >
                 <View style={styles.innerContainer}>
                     <View>
                         <Text style={styles.name}>{name}</Text>
@@ -40,9 +29,14 @@ function MenuItem({
                         <Text style={styles.price}>{price}</Text>
                     </View>
                 </View>
-            </Pressable>
-            <Button title="Dodaj do zamówienia" onPress={() => alert("Dodano do zamówienia!")}/>
-
+            <View>
+                <TouchableOpacity
+                    style={styles.addElementSign}
+                    onPress={() => alert("Dodano do zamówienia!")}
+                >
+                    <Text >+</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -51,7 +45,7 @@ export default MenuItem;
 
 const styles = StyleSheet.create({
     menuItem: {
-        margin: 16,
+        margin: 10,
         borderRadius: 8,
         overflow: Platform.OS === 'android' ? 'hidden' : 'visible',
         backgroundColor: 'white',
@@ -60,6 +54,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowOffset: {width: 0, height: 2},
         shadowRadius: 8,
+        flexDirection: 'row'
     },
     buttonPressed: {
         opacity: 0.5,
@@ -67,6 +62,7 @@ const styles = StyleSheet.create({
     innerContainer: {
         borderRadius: 8,
         overflow: 'hidden',
+        width: '88%'
     },
     name: {
         fontWeight: 'bold',
@@ -76,7 +72,7 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 14,
-        margin: 2,
+        margin: 5,
         textAlign: 'center'
     },
     price: {
@@ -84,5 +80,18 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
         margin: 2,
+    },
+    addElementSign: {
+        width: 30,
+        height: 30,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderRadius: 10,
+        backgroundColor: '#00cc00',
+        opacity: 0.6,
+        marginTop: 30,
+        marginBottom: 30
     },
 });

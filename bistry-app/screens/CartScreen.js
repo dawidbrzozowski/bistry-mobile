@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button} from 'react-native';
-import MenuItem from "../components/MenuItem";
+import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button, TouchableOpacity} from 'react-native';
 import MenuCartItem from "../components/MenuCartItem";
 
 
@@ -24,7 +23,7 @@ export default function CartScreen({route, navigation}) {
     }
 
     useEffect(() => {
-        navigation.setOptions({headerTitle: "Koszyk dla stolika numer " + tableNumber});
+        navigation.setOptions({headerTitle: "Koszyk #" + tableNumber});
         getCart();
     }, []);
 
@@ -50,7 +49,12 @@ export default function CartScreen({route, navigation}) {
                     renderItem={renderMenuItem}
                 />
             )}
-            <Button title={"Dokonaj płatności: "+ data.reduce((a, b) => a + (b["price"] || 0), 0)} onPress={() => alert("Dokonano płatność!")}/>
+            <TouchableOpacity
+                style={styles.specialActionButton}
+                onPress={() => alert("Dokonano płatności!")}
+            >
+                <Text >{"Dokonaj płatności: "+ data.reduce((a, b) => a + (b["price"] || 0), 0) + ",00"}</Text>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -58,9 +62,23 @@ export default function CartScreen({route, navigation}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#fcfcfc',
         alignItems: 'center',
         justifyContent: 'center',
-
+    },
+    specialActionButton: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        opacity: 0.6,
+        backgroundColor: "green",
+        marginTop: 10,
+        borderBottomRightRadius: 15,
+        borderBottomLeftRadius: 15,
+        height: 40,
+        width: '72%',
+        marginBottom: 10,
+        marginRight: 2,
+        marginLeft: 2
     },
 });
