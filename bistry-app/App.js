@@ -16,8 +16,22 @@ export default function App() {
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
                 <Stack.Screen
-                    name="Home" options={{title: "Ekran powitalny"}} component={HomeScreen}/>
-                <Stack.Screen name="QRCodeScanner" options={{title: "Zeskanuj stolik"}} component={BarScanner}/>
+                    name="Home"
+                    options={{
+                        title: "",
+                        headerStyle: {
+                        backgroundColor: '#fcfcfc'
+                        }
+                    }}
+                    component={HomeScreen}
+                />
+                <Stack.Screen
+                    name="QRCodeScanner"
+                    options={{
+                        title: "Zeskanuj stolik",
+                    }}
+                    component={BarScanner}
+                />
                 <Stack.Screen name="MainScreen" component={MainScreen}
                               // options={({navigation, route})=>({
                               //     headerRight: () => (

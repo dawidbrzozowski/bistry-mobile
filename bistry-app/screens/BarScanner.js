@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import {StatusBar} from "expo-status-bar";
 
@@ -18,15 +18,13 @@ function BarScanner({ navigation }) {
         setScanned(true);
         const tableNumber = parseInt(data);
         if (!isNaN(tableNumber)){
-            alert(
-                `QR Code code has been scanned!\nMoving to the table ${data}!`
-            );
             navigation.navigate("MainScreen", {"tableNumber": tableNumber});
         }
         else {
-            alert(
+            Alert.alert(
+                "Warning!",
                 `Please scan a valid QR Code!`
-            );
+            )
         }
 
     };
@@ -48,7 +46,14 @@ function BarScanner({ navigation }) {
                     onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
                     style={StyleSheet.absoluteFillObject}
                 />
-                {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+                {scanned &&
+                <TouchableOpacity
+                    style={styles.roundButton}
+                    onPress={() => setScanned(false)}
+                >
+                    <Text >Zeskanuj ponownie</Text>
+                </TouchableOpacity>
+                }
             </View>
         </>
 
@@ -62,5 +67,17 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
+    },
+    roundButton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        marginLeft: 100,
+        marginRight: 100,
+        height: 50,
+        borderRadius: 100,
+        backgroundColor: '#ccc',
+        opacity: 0.4
     },
 });
