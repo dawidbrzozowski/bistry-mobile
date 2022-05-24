@@ -62,7 +62,8 @@ export default function MainScreen({route, navigation}) {
 
     const handleSendOrder = async (order) => {
         try {
-            await fetch(apiUrl + "PlaceOrder", {
+            console.log(order)
+            await fetch(apiUrl + "Orders/PlaceOrder", {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -70,13 +71,14 @@ export default function MainScreen({route, navigation}) {
                 },
                 body: JSON.stringify({
                     "tableId": tableNumber,
-                    "menuItems": order
+                    "menuItems": order.map(el => el.name).join(";")
                 }
                 )
                     .then(response => {if (response.status === 200) alert("Zamówienie w trakcie realizacji!")})
             });
         }
         catch(error) {
+            console.log(error)
             alert("Nie udało się przekazać zamówienia. Spróbuj ponownie za chwilę!")
         }
     }
