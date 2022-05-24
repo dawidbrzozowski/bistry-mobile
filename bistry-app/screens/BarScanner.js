@@ -18,7 +18,8 @@ function BarScanner({ navigation }) {
         setScanned(true);
         const tableNumber = parseInt(data);
         if (!isNaN(tableNumber)){
-            navigation.navigate("MainScreen", {"tableNumber": tableNumber});
+            navigation.navigate("MainScreen",
+                {"tableNumber": tableNumber, "resetOrders": false});
         }
         else {
             Alert.alert(

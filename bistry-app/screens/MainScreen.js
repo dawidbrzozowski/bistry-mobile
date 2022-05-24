@@ -6,15 +6,19 @@ import MenuItem from "../components/MenuItem";
 export default function MainScreen({route, navigation}) {
     const tableNumber = route.params.tableNumber;
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
+    const [menu, setMenu] = useState([]);
     const apiUrl = "https://bistry-api.azurewebsites.net/";
     const [orders, setOrders] = useState([]);
 
+
+    const clearOrders = () => {
+        setOrders([]);
+    }
     const getMenu = async () => {
         try {
             const response = await fetch(apiUrl + "MenuItems");
             const json = await response.json();
-            setData(json);
+            setMenu(json);
         } catch (error) {
             console.error(error);
         } finally {
@@ -23,14 +27,19 @@ export default function MainScreen({route, navigation}) {
         }
     }
 
+
     useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            if ("params" in route && "resetOrders" in route.params && route.params.resetOrders)
+                setOrders([]);
+        });
         navigation.setOptions({headerTitle: "Stolik #" + tableNumber})
         navigation.setOptions({headerRight: () => (
                 <Button
                     onPress={() => navigation.navigate(
                         "CartScreen", {
                             "tableNumber": tableNumber,
-                            "order": orders
+                            "order": orders,
                         }
                         )
                     }
@@ -41,7 +50,7 @@ export default function MainScreen({route, navigation}) {
         getMenu();
     }, []);
 
-    const dataCallback = (menuItem) => {
+    const orderCallback = (menuItem) => {
         orders.push(menuItem);
     }
 
@@ -56,27 +65,33 @@ export default function MainScreen({route, navigation}) {
             price: menuItem.price,
             description: menuItem.description
         }
-        return <MenuItem dataCallback={dataCallback} {...menuItemProps}/>;
+        return <MenuItem orderCallback={orderCallback} {...menuItemProps}/>;
 
     }
 
     const handleSendOrder = async (order) => {
         try {
-            console.log(order)
-            await fetch(apiUrl + "Orders/PlaceOrder", {
+            console.log(order);
+            let x = await fetch(apiUrl + "Orders/PlaceOrder", {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "tableId": tableNumber,
-                    "menuItems": order.map(el => el.name).join(";")
-                }
+                        tableId: tableNumber,
+                        menuItems: order.map(el => el.name).join(";")
+                    }
                 )
-                    .then(response => {if (response.status === 200) alert("Zamówienie w trakcie realizacji!")})
             });
+            if (x.status === 200){
+                alert("Zamówienie w trakcie realizacji!")
+            }
+            else {
+                alert("przyjęto, ale status != 200")
+            }
         }
+
         catch(error) {
             console.log(error)
             alert("Nie udało się przekazać zamówienia. Spróbuj ponownie za chwilę!")
@@ -85,18 +100,16 @@ export default function MainScreen({route, navigation}) {
 
     const handleCallWaiter = async () => {
         try {
-            await fetch(apiUrl + "Orders/CallWaiter", {
-                method: 'GET',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({"table": tableNumber})
-                    .then(response => {if (response.status === 200) alert("Wezwano kelnera. Zaraz podejdzie do stolika.")})
-            });
+            let x = await fetch(apiUrl + `Orders/CallWaiter/${tableNumber}`);
+            if (x.status === 200) {
+                alert("Wezwano kelnera. Zaraz podejdzie do stolika!");
+            } else {
+                alert("przyjęto, ale status != 200");
+            }
         }
         catch(error) {
-            alert("Nie udało się wezwać kelnera. Proszę spróbować później!")
+            console.log(error);
+            alert("Nie udało się wezwać kelnera. Proszę spróbować później!");
         }
     }
 
@@ -105,7 +118,7 @@ export default function MainScreen({route, navigation}) {
         <View style={styles.container}>
             {isLoading ? <ActivityIndicator/> : (
                 <FlatList
-                    data={data}
+                    data={menu}
                     keyExtractor={(item) => item.id}
                     renderItem={renderMenuItem}
                 />
@@ -119,7 +132,7 @@ export default function MainScreen({route, navigation}) {
 
                 <TouchableOpacity
                     style={{...styles.specialActionButton, borderBottomRightRadius: 15, backgroundColor: "green"}}
-                    onPress={() => handleSendOrder(data)}>
+                    onPress={() => handleSendOrder(orders)}>
                     <Text >Zamów</Text>
                 </TouchableOpacity>
             </View>

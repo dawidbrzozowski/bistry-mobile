@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList, Text, View, TouchableOpacity} from 'react-native';
 import MenuCartItem from "../components/MenuCartItem";
+import MainScreen from "./MainScreen";
 
 
 export default function CartScreen({route, navigation}) {
     const tableNumber = route.params.tableNumber;
-    const order = route.params.order;
-
+    const [order, setOrder] = useState(route.params.order);
 
     useEffect(() => {
         navigation.setOptions({headerTitle: "Koszyk #" + tableNumber});
@@ -26,7 +26,13 @@ export default function CartScreen({route, navigation}) {
 
     const handlePayment = () => {
         // If one would use some Payment API i.e. Stripe, the code would belong here.
-        alert("Opłacono zamówienie")
+        alert("Opłacono zamówienie");
+
+        navigation.push('MainScreen', {
+            tableNumber: tableNumber, resetOrders: true
+            }
+        )
+        setOrder([]);
     }
 
 

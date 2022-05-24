@@ -9,7 +9,7 @@ import React from "react";
 
 
 function MenuItem({
-                      dataCallback,
+                      orderCallback,
                       id,
                       name,
                       category,
@@ -31,7 +31,7 @@ function MenuItem({
             <View>
                 <TouchableOpacity
                     style={styles.addElementSign}
-                    onPress={() => dataCallback({
+                    onPress={() => orderCallback({
                         id: id,
                         name: name,
                         category: category,
