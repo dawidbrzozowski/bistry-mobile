@@ -1,30 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button, TouchableOpacity} from 'react-native';
+import {StyleSheet, FlatList, Text, View, Button, TouchableOpacity} from 'react-native';
 import MenuCartItem from "../components/MenuCartItem";
 
 
 export default function CartScreen({route, navigation}) {
     const tableNumber = route.params.tableNumber;
-    const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
-    const apiUrl = "https://bistry-api.azurewebsites.net/menuitems"; // tu podmiana na api z zamówieniem dla danego stolika
+    const order = route.params.order;
 
-
-    const getCart = async () => {
-        try {
-            const response = await fetch(apiUrl);
-            const json = await response.json();
-            setData(json);
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    }
 
     useEffect(() => {
         navigation.setOptions({headerTitle: "Koszyk #" + tableNumber});
-        getCart();
     }, []);
 
     function renderMenuItem(itemData){
@@ -39,41 +24,24 @@ export default function CartScreen({route, navigation}) {
 
     }
 
-    const handlePayment = async (order) => {
-        try {
-            await fetch(apiUrl + "MakePayment", {
-                method: 'POST',
-                headers: {
-                    Accept: 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    "tableId": tableNumber,
-                    "menuItems": order
-                })
-                    .then(response => {if (response.status === 200) alert("Opłacono zamówienie")})
-            });
-        }
-        catch(error) {
-            alert("Nie udało się opłacić zamówienia. Spróbuj ponownie lub zapłać gotówką!")
-        }
+    const handlePayment = () => {
+        // If one would use some Payment API i.e. Stripe, the code would belong here.
+        alert("Opłacono zamówienie")
     }
 
 
     return (
         <View style={styles.container}>
-            {isLoading ? <ActivityIndicator/> : (
-                <FlatList
-                    data={data}
+            <FlatList
+                    data={order}
                     keyExtractor={(item) => item.id}
                     renderItem={renderMenuItem}
-                />
-            )}
+            />
             <TouchableOpacity
                 style={styles.specialActionButton}
-                onPress={() => handlePayment(data)}
+                onPress={() => handlePayment()}
             >
-                <Text >{"Dokonaj płatności: "+ data.reduce((a, b) => a + (b["price"] || 0), 0) + ",00"}</Text>
+                <Text >{"Dokonaj płatności: "+ order.reduce((a, b) => a + (b["price"] || 0), 0) + ",00"}</Text>
             </TouchableOpacity>
         </View>
     );

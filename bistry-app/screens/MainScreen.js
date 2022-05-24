@@ -8,7 +8,7 @@ export default function MainScreen({route, navigation}) {
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
     const apiUrl = "https://bistry-api.azurewebsites.net/";
-
+    const [orders, setOrders] = useState([]);
 
     const getMenu = async () => {
         try {
@@ -27,13 +27,23 @@ export default function MainScreen({route, navigation}) {
         navigation.setOptions({headerTitle: "Stolik #" + tableNumber})
         navigation.setOptions({headerRight: () => (
                 <Button
-                    onPress={() => navigation.navigate("CartScreen", {"tableNumber": tableNumber})}
+                    onPress={() => navigation.navigate(
+                        "CartScreen", {
+                            "tableNumber": tableNumber,
+                            "order": orders
+                        }
+                        )
+                    }
                     title={"Koszyk"}
                     color="#00cc00"
                 />
             )});
         getMenu();
     }, []);
+
+    const dataCallback = (menuItem) => {
+        orders.push(menuItem);
+    }
 
 
     function renderMenuItem(itemData){
@@ -46,7 +56,7 @@ export default function MainScreen({route, navigation}) {
             price: menuItem.price,
             description: menuItem.description
         }
-        return <MenuItem {...menuItemProps}/>;
+        return <MenuItem dataCallback={dataCallback} {...menuItemProps}/>;
 
     }
 

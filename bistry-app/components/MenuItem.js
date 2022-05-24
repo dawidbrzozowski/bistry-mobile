@@ -12,6 +12,7 @@ import React from "react";
 
 
 function MenuItem({
+                      dataCallback,
                       id,
                       name,
                       category,
@@ -19,6 +20,7 @@ function MenuItem({
                       description,
                   }) {
     const navigation = useNavigation();
+
 
     return (
         <View style={styles.menuItem}>
@@ -32,7 +34,13 @@ function MenuItem({
             <View>
                 <TouchableOpacity
                     style={styles.addElementSign}
-                    onPress={() => alert("Dodano do zamówienia!")}
+                    onPress={() => dataCallback({
+                        id: id,
+                        name: name,
+                        category: category,
+                        price: price,
+                        description: description
+                    })}
                 >
                     <Text >+</Text>
                 </TouchableOpacity>
