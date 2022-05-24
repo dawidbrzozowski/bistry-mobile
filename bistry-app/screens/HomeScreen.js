@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
 import OutlinedButton from "../components/UI/OutlinedButton";

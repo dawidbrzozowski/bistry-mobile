@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, FlatList, Text, View, Button, TouchableOpacity} from 'react-native';
+import React, {useEffect} from 'react';
+import {StyleSheet, FlatList, Text, View, TouchableOpacity} from 'react-native';
 import MenuCartItem from "../components/MenuCartItem";
 
 

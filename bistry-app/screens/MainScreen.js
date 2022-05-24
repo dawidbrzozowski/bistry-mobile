@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, FlatList, ActivityIndicator, Text, View, Button, TouchableOpacity} from 'react-native';
 import MenuItem from "../components/MenuItem";
 

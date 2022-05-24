@@ -1,9 +1,6 @@
 import {
     View,
-    Pressable,
     Text,
-    Image,
-    Button,
     StyleSheet,
     Platform,
 } from 'react-native';
