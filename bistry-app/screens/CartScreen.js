@@ -41,13 +41,16 @@ export default function CartScreen({route, navigation}) {
 
     const handlePayment = async (order) => {
         try {
-            const response = await fetch(apiUrl + "makePayment", {
+            await fetch(apiUrl + "MakePayment", {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({tableNumber: order})
+                body: JSON.stringify({
+                    "tableId": tableNumber,
+                    "menuItems": order
+                })
                     .then(response => {if (response.status === 200) alert("Opłacono zamówienie")})
             });
         }

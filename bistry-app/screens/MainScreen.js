@@ -12,7 +12,7 @@ export default function MainScreen({route, navigation}) {
 
     const getMenu = async () => {
         try {
-            const response = await fetch(apiUrl + "menuitems");
+            const response = await fetch(apiUrl + "MenuItems");
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -52,13 +52,17 @@ export default function MainScreen({route, navigation}) {
 
     const handleSendOrder = async (order) => {
         try {
-            const response = await fetch(apiUrl + "makeOrder", {
+            await fetch(apiUrl + "PlaceOrder", {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({tableNumber: order})
+                body: JSON.stringify({
+                    "tableId": tableNumber,
+                    "menuItems": order
+                }
+                )
                     .then(response => {if (response.status === 200) alert("Zamówienie w trakcie realizacji!")})
             });
         }
@@ -69,8 +73,8 @@ export default function MainScreen({route, navigation}) {
 
     const handleCallWaiter = async () => {
         try {
-            const response = await fetch(apiUrl + "makeOrder", {
-                method: 'POST',
+            await fetch(apiUrl + "Orders/CallWaiter", {
+                method: 'GET',
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json'
