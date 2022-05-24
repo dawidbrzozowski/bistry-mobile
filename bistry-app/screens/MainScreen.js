@@ -7,12 +7,12 @@ export default function MainScreen({route, navigation}) {
     const tableNumber = route.params.tableNumber;
     const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
-    const apiUrl = "https://bistry-api.azurewebsites.net/menuitems";
+    const apiUrl = "https://bistry-api.azurewebsites.net/";
 
 
     const getMenu = async () => {
         try {
-            const response = await fetch(apiUrl);
+            const response = await fetch(apiUrl + "menuitems");
             const json = await response.json();
             setData(json);
         } catch (error) {
@@ -50,6 +50,40 @@ export default function MainScreen({route, navigation}) {
 
     }
 
+    const handleSendOrder = async (order) => {
+        try {
+            const response = await fetch(apiUrl + "makeOrder", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({tableNumber: order})
+                    .then(response => {if (response.status === 200) alert("Zamówienie w trakcie realizacji!")})
+            });
+        }
+        catch(error) {
+            alert("Nie udało się przekazać zamówienia. Spróbuj ponownie za chwilę!")
+        }
+    }
+
+    const handleCallWaiter = async () => {
+        try {
+            const response = await fetch(apiUrl + "makeOrder", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"table": tableNumber})
+                    .then(response => {if (response.status === 200) alert("Wezwano kelnera. Zaraz podejdzie do stolika.")})
+            });
+        }
+        catch(error) {
+            alert("Nie udało się wezwać kelnera. Proszę spróbować później!")
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -63,14 +97,14 @@ export default function MainScreen({route, navigation}) {
             <View style={styles.specialActionView}>
                 <TouchableOpacity
                     style={{...styles.specialActionButton, borderBottomLeftRadius: 15, backgroundColor: "yellow"}}
-                    onPress={() => alert("Wezwano kelnera! Proszę czekać")}>
+                    onPress={() => handleCallWaiter()}>
                     <Text >Wezwij kelnera</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                     style={{...styles.specialActionButton, borderBottomRightRadius: 15, backgroundColor: "green"}}
-                    onPress={() => alert("Opłacono zamówienie")}>
-                    <Text >Opłać zamówienie</Text>
+                    onPress={() => handleSendOrder(data)}>
+                    <Text >Zamów</Text>
                 </TouchableOpacity>
             </View>
         </View>

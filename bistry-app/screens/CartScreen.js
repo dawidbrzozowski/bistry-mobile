@@ -39,6 +39,23 @@ export default function CartScreen({route, navigation}) {
 
     }
 
+    const handlePayment = async (order) => {
+        try {
+            const response = await fetch(apiUrl + "makePayment", {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({tableNumber: order})
+                    .then(response => {if (response.status === 200) alert("Opłacono zamówienie")})
+            });
+        }
+        catch(error) {
+            alert("Nie udało się opłacić zamówienia. Spróbuj ponownie lub zapłać gotówką!")
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -51,7 +68,7 @@ export default function CartScreen({route, navigation}) {
             )}
             <TouchableOpacity
                 style={styles.specialActionButton}
-                onPress={() => alert("Dokonano płatności!")}
+                onPress={() => handlePayment(data)}
             >
                 <Text >{"Dokonaj płatności: "+ data.reduce((a, b) => a + (b["price"] || 0), 0) + ",00"}</Text>
             </TouchableOpacity>
